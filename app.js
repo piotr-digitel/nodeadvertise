@@ -7,6 +7,39 @@ const path = require('path')
 
 const { init, getAdvs, getAdv, deleteAdv, addAdv, updateAdv } = require('./db');
 
+//autorisation
+const users = [{
+    login: 'jan',
+    password: 'alamakota',
+    name: 'Jan',
+}, {
+    login: 'adam',
+    password: 'cukierki',
+    name: 'Adam',
+}, {
+    login: 'ewa',
+    password: 'jabłko',
+    name: 'Ewa',
+}];
+
+function isVerifiedToken(token){
+    if (!token.includes(':')){
+        return false;
+    };
+    const [login, password] = token.split(':');
+    return users.some((user) => user.login === login && user.password === password)
+};
+
+const authMiddleware = (req, res, next) => {
+    const token = req.get("authorization");
+    if (isVerifiedToken(token)){
+        next();
+    } else {
+        res.status(401);
+        res.send("bad token");
+    };
+};
+
 app.use(express.json());
 
 init().then(() => {
@@ -42,6 +75,8 @@ init().then(() => {
 
         res.send();
     });
+    
+    app.use(authMiddleware);
 
     app.patch('/advs/:id', async (req, res) => {
         const { id } = req.params;
