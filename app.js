@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const status = require('http-status');
 const app = express();
+const path = require('path')
+//const errorPage = require('./404.html');
 
 const { init, getAdvs, getAdv, deleteAdv, addAdv, updateAdv } = require('./db');
 
@@ -10,7 +12,7 @@ app.use(express.json());
 init().then(() => {
     app.get('/advs', async (req, res) => {
         const advs = await getAdvs();
-        res.send(tasks);
+        res.send(advs);
     });
 
     app.get('/advs/:id', async (req, res) => {
@@ -78,10 +80,18 @@ init().then(() => {
 
         res.send();
     });
+
 })
-.finally(() => {
+.then(()=>{
     app.get('/heartbeat', (req, res) => {
         res.send(new Date());
+    });
+})
+.finally(() => {
+        //catch not exists endpoint will be Error Page
+    app.use((req, res)=>{
+        const filePath = path.join(__dirname, "./404.html");
+        res.sendFile(filePath);
     });
     
     app.listen(process.env.PORT, () => console.log('Advertise server started at port:' + process.env.PORT));

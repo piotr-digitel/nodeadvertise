@@ -12,7 +12,7 @@ const init = () =>
     MongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
         .then((client) => {
             db = client.db(process.env.MONGODB_DBNAME);
-            tasksCollection = db.collection(AdvCollectionName);
+            advsCollection = db.collection(AdvCollectionName);
         })
         .catch(error => console.log(error));
 
