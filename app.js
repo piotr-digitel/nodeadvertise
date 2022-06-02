@@ -84,5 +84,5 @@ init().then(() => {
         res.send(new Date());
     });
     
-    app.listen(process.env.PORT, () => console.log('Advertise server started at:' + process.env.PORT));
+    app.listen(process.env.PORT, () => console.log('Advertise server started at port:' + process.env.PORT));
 });
