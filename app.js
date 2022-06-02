@@ -22,18 +22,19 @@ const users = [{
     name: 'Ewa',
 }];
 
-function isVerifiedToken(token){
-    if (!token.includes(':')){
-        return false;
-    };
-    const [login, password] = token.split(':');
-    return users.some((user) => user.login === login && user.password === password)
-};
+function getUser(login, password){
+    return users.find(u => u.login === login && u.password === password);
+}
 
 const authMiddleware = (req, res, next) => {
-    const token = req.get("authorization");
-    if (isVerifiedToken(token)){
-        next();
+    const token = req.headers.authorization;
+    if (token && token.includes(":")){
+        const [login, password] = token.split(':');
+        const user = getUser(login, password);
+        if (user != null){
+            res.userName = user.name;
+            next();
+        };
     } else {
         res.status(401);
         res.send("bad token");
@@ -43,25 +44,40 @@ const authMiddleware = (req, res, next) => {
 app.use(express.json());
 
 init().then(() => {
+
+    app.get('/heartbeat', (req, res) => {
+        res.send(new Date());
+    });
+
     app.get('/advs', async (req, res) => {
         const advs = await getAdvs();
         res.send(advs);
     });
 
-    app.get('/advs/:id', async (req, res) => {
-        const { id } = req.params;
+    app.get('/adv', async (req, res) => {
+        //const { id } = req.params;
+        //id musi mieć 24 znaki!!!
+        const id = req.query.id.toString();
+
+        //id = "6298eabd50ca9725d4f1ceee";
+
+        console.log("adv: "+ id);
+        
+        
         const adv = await getAdv(id);
 
         if (adv) {
             res.send(adv);
         };
 
-        res.statusCode = status.NOT_FOUND;
-        res.send();
+       res.statusCode = status.NOT_FOUND;
+       res.send('Record not exist.');
     });
 
-    app.post('/advs', async (req, res) => {
+    app.post('/adv', async (req, res) => {
         const newAdv = req.body;
+
+        //console.table(newAdv);
         
         // warto dodać sprawdzenie czy newAdv posiada odpowiednie właściwości, gdy nie to zwracać kod 400 bez dodawania do bazy
 
@@ -75,11 +91,24 @@ init().then(() => {
 
         res.send();
     });
-    
-    app.use(authMiddleware);
 
-    app.patch('/advs/:id', async (req, res) => {
-        const { id } = req.params;
+
+    app.get('*', (req, res)=>{
+        const filePath = path.join(__dirname, "./404.html");
+        res.statusCode = status.NOT_FOUND;
+        res.sendFile(filePath);
+    });  
+
+
+    //app.use(authMiddleware);
+
+
+
+    app.patch('/adv', async (req, res) => {
+        //const { id } = req.params;
+        //id musi mieć 24 znaki!!!
+        const id = req.query.id.toString();
+
         const modifiedAdv = req.body;
 
         if (modifiedAdv == null || modifiedAdv.isCompleted == null) {
@@ -103,8 +132,12 @@ init().then(() => {
         res.send();
     });
 
-    app.delete('/advs/:id', async (req, res) => {
-        const { id } = req.params;
+    app.delete('/adv', async (req, res) => {
+        //id musi mieć 24 znaki!!!
+        const id = req.query.id.toString();
+        console.log('delete id');
+        //const { id } = req.params;
+
         const result = await deleteAdv(id);
 
         if (result.deletedCount == 1){
@@ -116,18 +149,13 @@ init().then(() => {
         res.send();
     });
 
-})
-.then(()=>{
-    app.get('/heartbeat', (req, res) => {
-        res.send(new Date());
-    });
+    app.get('*', (req, res)=>{
+        const filePath = path.join(__dirname, "./404.html");
+        res.statusCode = status.NOT_FOUND;
+        res.sendFile(filePath);
+    });  
+
 })
 .finally(() => {
-        //catch not exists endpoint will be Error Page
-    app.use((req, res)=>{
-        const filePath = path.join(__dirname, "./404.html");
-        res.sendFile(filePath);
-    });
-    
     app.listen(process.env.PORT, () => console.log('Advertise server started at port:' + process.env.PORT));
 });
