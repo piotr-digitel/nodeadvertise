@@ -61,7 +61,7 @@ init().then(() => {
 
         //id = "6298eabd50ca9725d4f1ceee";
 
-        console.log("adv: "+ id);
+        console.log("get adv id: "+ id);
         
         
         const adv = await getAdv(id);
@@ -93,14 +93,14 @@ init().then(() => {
     });
 
 
-    app.get('*', (req, res)=>{
-        const filePath = path.join(__dirname, "./404.html");
-        res.statusCode = status.NOT_FOUND;
-        res.sendFile(filePath);
-    });  
+    // app.get('*', (req, res)=>{
+    //     const filePath = path.join(__dirname, "./404.html");
+    //     res.statusCode = status.NOT_FOUND;
+    //     res.sendFile(filePath);
+    // });  
 
 
-    //app.use(authMiddleware);
+    app.use(authMiddleware);
 
 
 
@@ -135,7 +135,7 @@ init().then(() => {
     app.delete('/adv', async (req, res) => {
         //id musi mieć 24 znaki!!!
         const id = req.query.id.toString();
-        console.log('delete id');
+        console.log('deleted id: ' + id);
         //const { id } = req.params;
 
         const result = await deleteAdv(id);
