@@ -7,7 +7,7 @@ const path = require('path')
 
 const { init, getAdvs, getAdv, deleteAdv, addAdv, updateAdv } = require('./db');
 
-//autorisation
+//autorisation data
 const users = [{
     login: 'jan',
     password: 'alamakota',
@@ -45,6 +45,13 @@ app.use(express.json());
 
 init().then(() => {
 
+    app.use('*', (req, res, next)=>{
+        const url = new URL(`${req.protocol}://${req.get('host')}${req.originalUrl}`);
+        //tu zrobić zapis do pliku
+        console.log("Time: " + new Date() + " - method: " + req.method + "  - address: " + url);  //req.originalUrl);
+        next();
+    }); 
+
     app.get('/heartbeat', (req, res) => {
         res.send(new Date());
     });
@@ -68,10 +75,10 @@ init().then(() => {
 
         if (adv) {
             res.send(adv);
+        }else{
+            res.statusCode = status.NOT_FOUND;
+            res.send('Record not exist.');   
         };
-
-       res.statusCode = status.NOT_FOUND;
-       res.send('Record not exist.');
     });
 
     app.post('/adv', async (req, res) => {
@@ -93,11 +100,16 @@ init().then(() => {
     });
 
 
-    // app.get('*', (req, res)=>{
-    //     const filePath = path.join(__dirname, "./404.html");
-    //     res.statusCode = status.NOT_FOUND;
-    //     res.sendFile(filePath);
-    // });  
+    app.get('*', (req, res, next)=>{
+        const token = req.headers.authorization;
+        if (token){
+            next();
+        }else{
+          const filePath = path.join(__dirname, "./404.html");
+            res.statusCode = status.NOT_FOUND;
+            res.sendFile(filePath);
+        };
+    });  
 
 
     app.use(authMiddleware);
