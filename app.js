@@ -5,7 +5,7 @@ const app = express();
 const path = require('path')
 //const errorPage = require('./404.html');
 
-const { init, getAdvs, getAdv, deleteAdv, addAdv, updateAdv } = require('./db');
+const { init, getAdvs, getAdv, findAdvs, deleteAdv, addAdv, updateAdv } = require('./db');
 
 //autorisation data
 const users = [{
@@ -73,7 +73,7 @@ init().then(() => {
         
         const adv = await getAdv(id);
 
-        if (adv) {
+        if(Object.keys(adv).length){
             res.send(adv);
         }else{
             res.statusCode = status.NOT_FOUND;
@@ -81,10 +81,35 @@ init().then(() => {
         };
     });
 
+    app.get('/findadvs', async (req, res) => {
+        let newConditions = req.body;
+        if(newConditions.title) newConditions.title =  {$regex:  ".*" + newConditions.title + ".*"};
+        if(newConditions.description) newConditions.description =  {$regex:  ".*" + newConditions.description + ".*"};
+        if(newConditions.author) newConditions.author =  {$regex:  ".*" + newConditions.author + ".*"};
+        if(newConditions.category) newConditions.category =  {$regex:  ".*" + newConditions.category + ".*"};
+        //console.log(newConditions);
+
+        //const test= { "title": { $regex: "Title +[a-zA-Z]" } };
+        //const test1= {"title": {'$regex' : '.*' + 'Four' + '.*'}};
+        //console.log(test1);
+
+        const result = await findAdvs(newConditions);   //return object, if there no records found - keys.length=0
+
+        if(Object.keys(result).length){   
+            res.send(result);
+        }else{
+            res.statusCode = status.NOT_FOUND;
+            res.send('Record not exist.');  
+        };
+    });
+
+
+
+
     app.post('/adv', async (req, res) => {
         const newAdv = req.body;
 
-        //console.table(newAdv);
+        console.table(newAdv);
         
         // warto dodać sprawdzenie czy newAdv posiada odpowiednie właściwości, gdy nie to zwracać kod 400 bez dodawania do bazy
 
@@ -105,16 +130,13 @@ init().then(() => {
         if (token){
             next();
         }else{
-          const filePath = path.join(__dirname, "./404.html");
+          const filePath = path.join(__dirname, "./404.jpg");
             res.statusCode = status.NOT_FOUND;
             res.sendFile(filePath);
         };
     });  
 
-
     app.use(authMiddleware);
-
-
 
     app.patch('/adv', async (req, res) => {
         //const { id } = req.params;
@@ -162,7 +184,7 @@ init().then(() => {
     });
 
     app.get('*', (req, res)=>{
-        const filePath = path.join(__dirname, "./404.html");
+        const filePath = path.join(__dirname, "./404.jpg");
         res.statusCode = status.NOT_FOUND;
         res.sendFile(filePath);
     });  

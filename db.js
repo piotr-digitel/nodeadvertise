@@ -24,6 +24,10 @@ const getAdv = (id) => {
     return advsCollection.findOne({ _id: new ObjectId(id) });
 }
 
+const findAdvs = (conditions) => {
+    return advsCollection.find(conditions).toArray();
+}
+
 const deleteAdv = (id) => {
     return advsCollection.deleteOne({ _id: new ObjectId(id) });
 }
@@ -40,4 +44,4 @@ const updateAdv = (id, isCompleted) => {
     );
 }
 
-module.exports = { init, getAdvs, getAdv, deleteAdv, addAdv, updateAdv };
+module.exports = { init, getAdvs, getAdv, findAdvs, deleteAdv, addAdv, updateAdv };

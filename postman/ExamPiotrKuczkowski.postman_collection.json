@@ -1,13 +1,12 @@
 {
 	"info": {
-		"_postman_id": "9322df2d-ce85-46fe-b8fc-74e6050e69b0",
+		"_postman_id": "89b871f8-8bfc-4673-ba25-7dffa63fc829",
 		"name": "ExamPiotrKuczkowski",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19888925"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "01 - heartbeat",
+			"name": "02 - heartbeat",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -25,7 +24,7 @@
 			"response": []
 		},
 		{
-			"name": "02 - not exists endpoint",
+			"name": "12 - not exists endpoint",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -43,7 +42,7 @@
 			"response": []
 		},
 		{
-			"name": "02 - not exists endpoint authorized",
+			"name": "12 - not exists endpoint authorized",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -67,7 +66,7 @@
 			"response": []
 		},
 		{
-			"name": "03 - all adverts",
+			"name": "04 - all adverts",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -109,13 +108,43 @@
 			"response": []
 		},
 		{
-			"name": "05 - advert add",
+			"name": "07 - adverts name=Two",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n     \"title\": \"Title Two\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}:{{port}}/findadvs",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"findadvs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03 - advert add",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n     \"id\": \"1\",\r\n     \"title\": \"Title Two\",\r\n     \"description\": \"my first adv\",\r\n     \"author\":\"Pinio\",\r\n     \"category\": \"normal\",\r\n     \"price\": 10.50,\r\n     \"new\": true,\r\n     \"aproved\": false,\r\n     \"published\": false,\r\n     \"inactive\": false\r\n }",
+					"raw": " {\r\n     \"id\": \"1\",\r\n     \"title\": \"Title Four\",\r\n     \"description\": \"my first adv\",\r\n     \"author\":\"Pinio\",\r\n     \"category\": \"normal\",\r\n     \"price\": 10.50,\r\n     \"new\": true,\r\n     \"aproved\": false,\r\n     \"published\": false,\r\n     \"inactive\": false\r\n }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -130,6 +159,36 @@
 					"port": "{{port}}",
 					"path": [
 						"adv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03 - advert add Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n     \"title\": \"Title Two\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}:{{port}}/findadvs",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"findadvs"
 					]
 				}
 			},
@@ -160,7 +219,7 @@
 			"response": []
 		},
 		{
-			"name": "07 - delete id=0",
+			"name": "05 - delete id=0",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -171,7 +230,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{baseUrl}}:{{port}}/adv?id=0",
+					"raw": "{{baseUrl}}:{{port}}/adv?id=6299ba3c0761d9194c729a2d",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -182,7 +241,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "0"
+							"value": "6299ba3c0761d9194c729a2d"
 						}
 					]
 				}
