@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "89b871f8-8bfc-4673-ba25-7dffa63fc829",
+		"_postman_id": "b0d71eff-b79e-4a86-8ba0-a35afe78d710",
 		"name": "ExamPiotrKuczkowski",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19888925"
 	},
 	"item": [
 		{
@@ -89,7 +90,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}:{{port}}/adv?id=6298eabd50ca9725d4f1ceee",
+					"raw": "{{baseUrl}}:{{port}}/adv?id=629bba35bfd18520f8508e63",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -100,7 +101,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "6298eabd50ca9725d4f1ceee"
+							"value": "629bba35bfd18520f8508e63"
 						}
 					]
 				}
@@ -117,7 +118,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n     \"title\": \"Title Two\"\r\n }",
+					"raw": " {\r\n     \"title\": \"Title\"\r\n }",
 					"options": {
 						"raw": {
 							"language": "json"

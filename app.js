@@ -63,21 +63,21 @@ init().then(() => {
 
     app.get('/adv', async (req, res) => {
         //const { id } = req.params;
-        //id musi mieć 24 znaki!!!
-        const id = req.query.id.toString();
+        //id musi mieć 24 znaki hex!!!
+        const validationRegex = new RegExp("^[0-9a-fA-F]{24}$")
+        const id = req.query.id;
 
-        //id = "6298eabd50ca9725d4f1ceee";
-
-        console.log("get adv id: "+ id);
-        
-        
-        const adv = await getAdv(id);
-
-        if(Object.keys(adv).length){
-            res.send(adv);
+        if(validationRegex.test(id)){
+            const adv = await getAdv(id);
+            if(adv){
+                res.send(adv);
+            }else{
+                res.statusCode = status.NOT_FOUND;
+                res.send('Record does not exists.');   
+            };
         }else{
-            res.statusCode = status.NOT_FOUND;
-            res.send('Record not exist.');   
+            res.statusCode = 411;
+            res.send('"id" passed in must be a string of 24 hex characters'); 
         };
     });
 
@@ -125,6 +125,12 @@ init().then(() => {
     });
 
 
+    // app.use(function(error, req, res, next) {      //error handling
+    //     res.json({ message: error.message });
+    //   });
+
+
+
     app.get('*', (req, res, next)=>{
         const token = req.headers.authorization;
         if (token){
@@ -140,8 +146,8 @@ init().then(() => {
 
     app.patch('/adv', async (req, res) => {
         //const { id } = req.params;
-        //id musi mieć 24 znaki!!!
-        const id = req.query.id.toString();
+        //id musi mieć 24 znaki hex!!!
+        const id = req.query.id;
 
         const modifiedAdv = req.body;
 
@@ -167,8 +173,8 @@ init().then(() => {
     });
 
     app.delete('/adv', async (req, res) => {
-        //id musi mieć 24 znaki!!!
-        const id = req.query.id.toString();
+        //id musi mieć 24 znaki hex!!!
+        const id = req.query.id;
         console.log('deleted id: ' + id);
         //const { id } = req.params;
 
@@ -187,8 +193,8 @@ init().then(() => {
         const filePath = path.join(__dirname, "./404.jpg");
         res.statusCode = status.NOT_FOUND;
         res.sendFile(filePath);
-    });  
-
+    }); 
+    
 })
 .finally(() => {
     app.listen(process.env.PORT, () => console.log('Advertise server started at port:' + process.env.PORT));
