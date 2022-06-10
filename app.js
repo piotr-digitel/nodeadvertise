@@ -48,40 +48,64 @@ init().then(() => {
     app.use('*', (req, res, next)=>{
         const url = new URL(`${req.protocol}://${req.get('host')}${req.originalUrl}`);
         //tu zrobić zapis do pliku
-        console.log("Time: " + new Date() + " - method: " + req.method + "  - address: " + url);  //req.originalUrl);
+        console.log("Timestamp: " + new Date().toLocaleString() + ", method: " + req.method + ", address: " + url);  //req.originalUrl);
         next();
-    }); 
-
-    app.get('/heartbeat', (req, res) => {
-        res.send(new Date());
     });
 
-    app.get('/advs', async (req, res) => {
-        const advs = await getAdvs();
-        res.send(advs);
+//read heartbeat
+    app.get('/heartbeat', (req, res, next) => {
+        try {       
+            res.send(new Date());
+        } catch (err) {
+            console.log("Server " + err);
+            res.statusCode = status.INTERNAL_SERVER_ERROR;
+            res.send("Server " + err);      
+        };      
     });
 
-    app.get('/adv', async (req, res) => {
-        //const { id } = req.params;
-        //id musi mieć 24 znaki hex!!!
-        const validationRegex = new RegExp("^[0-9a-fA-F]{24}$")
-        const id = req.query.id;
-
-        if(validationRegex.test(id)){
-            const adv = await getAdv(id);
-            if(adv){
-                res.send(adv);
-            }else{
-                res.statusCode = status.NOT_FOUND;
-                res.send('Record does not exists.');   
-            };
-        }else{
-            res.statusCode = 411;
-            res.send('"id" passed in must be a string of 24 hex characters'); 
+//read all advert's
+    app.get('/advs', async (req, res, next) => {
+        try {
+            const advs = await getAdvs();
+            res.send(advs);
+        } catch (err) {
+            console.log("Server " + err);
+            res.statusCode = status.INTERNAL_SERVER_ERROR;
+            res.send("Server " + err);      
         };
     });
 
-    app.get('/findadvs', async (req, res) => {
+//read one adv by id passed as param    
+    app.get('/adv', async (req, res, next) => {
+        //const { id } = req.params;
+        //id must have 24 char hex!!!
+        const validationRegex = new RegExp("^[0-9a-fA-F]{24}$")
+        const id = req.query.id;
+
+        try {
+            if(validationRegex.test(id)){   
+            //    if((id)){  //for test error handling only
+                const adv = await getAdv(id);
+                if(adv){
+                    res.send(adv);
+                }else{
+                    res.statusCode = status.NOT_FOUND;
+                    res.send('Record does not exists.');   
+                };
+            }else{
+                res.statusCode = 411;
+                res.send('"id" passed in must be a string of 24 hex characters.'); 
+            };
+        } catch (err) {
+            console.log("Server " + err);
+            res.statusCode = status.INTERNAL_SERVER_ERROR;
+            res.send("Server " + err);      
+            //next();
+        };
+    });
+
+//find adv's - parameters from body - in text fields finds words
+    app.get('/findadvs', async (req, res, next) => {
         let newConditions = req.body;
         if(newConditions.title) newConditions.title =  {$regex:  ".*" + newConditions.title + ".*"};
         if(newConditions.description) newConditions.description =  {$regex:  ".*" + newConditions.description + ".*"};
@@ -93,58 +117,61 @@ init().then(() => {
         //const test1= {"title": {'$regex' : '.*' + 'Four' + '.*'}};
         //console.log(test1);
 
-        const result = await findAdvs(newConditions);   //return object, if there no records found - keys.length=0
-
-        if(Object.keys(result).length){   
-            res.send(result);
-        }else{
-            res.statusCode = status.NOT_FOUND;
-            res.send('Record not exist.');  
+        try {        
+            const result = await findAdvs(newConditions);   //return object, if there no records found - keys.length=0
+            if(Object.keys(result).length){   
+                res.send(result);
+            }else{
+                res.statusCode = status.NOT_FOUND;
+                res.send('Record not exist.');  
+            };
+        } catch (err) {
+            console.log("Server " + err);
+            res.statusCode = status.INTERNAL_SERVER_ERROR;
+            res.send("Server " + err);      
         };
     });
 
 
-
-
-    app.post('/adv', async (req, res) => {
+//adding new adv
+    app.post('/adv', async (req, res, next) => {
         const newAdv = req.body;
 
         console.table(newAdv);
         
         // warto dodać sprawdzenie czy newAdv posiada odpowiednie właściwości, gdy nie to zwracać kod 400 bez dodawania do bazy
-
-        const result = await addAdv(newAdv);
-      
-        if (result.insertedCount === 1) {
-            res.statusCode = status.CREATED;
-        } else {
+        try { 
+            const result = await addAdv(newAdv);
+            if (result.insertedCount === 1) {
+                res.statusCode = status.CREATED;
+            } else {
+                res.statusCode = status.INTERNAL_SERVER_ERROR;
+            };
+            res.send();
+        } catch (err) {
+            console.log("Server " + err);
             res.statusCode = status.INTERNAL_SERVER_ERROR;
+            res.send("Server " + err);      
         };
-
-        res.send();
     });
 
-
-    // app.use(function(error, req, res, next) {      //error handling
-    //     res.json({ message: error.message });
-    //   });
-
-
-
+//not found endpoint unauthorized handler
     app.get('*', (req, res, next)=>{
         const token = req.headers.authorization;
         if (token){
             next();
         }else{
-          const filePath = path.join(__dirname, "./404.jpg");
+            const filePath = path.join(__dirname, "./404.jpg");
             res.statusCode = status.NOT_FOUND;
             res.sendFile(filePath);
         };
     });  
 
+//authorisation middelware
     app.use(authMiddleware);
 
-    app.patch('/adv', async (req, res) => {
+//edit adv - id from param, data to change from body
+    app.patch('/adv', async (req, res, next) => {
         //const { id } = req.params;
         //id musi mieć 24 znaki hex!!!
         const id = req.query.id;
@@ -172,24 +199,38 @@ init().then(() => {
         res.send();
     });
 
-    app.delete('/adv', async (req, res) => {
+//delete adv - id from param
+    app.delete('/adv', async (req, res, next) => {
         //id musi mieć 24 znaki hex!!!
         const id = req.query.id;
-        console.log('deleted id: ' + id);
+        //const author = req.query.author;
+        let [author, password] = req.headers.authorization.split(':');
+
+        //console.log('deleted id: ' + id);
         //const { id } = req.params;
 
-        const result = await deleteAdv(id);
+        author = "Pinio";
 
-        if (result.deletedCount == 1){
-            res.statusCode = status.NO_CONTENT;
-        } else {
-            res.statusCode = status.NOT_FOUND;
+        try { 
+            const result = await deleteAdv(id, author);
+
+            console.table(result)
+
+            if (result.deletedCount == 1){
+                res.statusCode = status.NO_CONTENT;
+            } else {
+                res.statusCode = status.NOT_FOUND;
+            };
+            res.send(author);
+        } catch (err) {
+            console.log("Server " + err);
+            res.statusCode = status.INTERNAL_SERVER_ERROR;
+            res.send("Server " + err);      
         };
-
-        res.send();
     });
 
-    app.get('*', (req, res)=>{
+//not found endpoint Authorized handler    
+    app.get('*', (req, res, next)=>{
         const filePath = path.join(__dirname, "./404.jpg");
         res.statusCode = status.NOT_FOUND;
         res.sendFile(filePath);

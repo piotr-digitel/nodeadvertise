@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "b0d71eff-b79e-4a86-8ba0-a35afe78d710",
+		"_postman_id": "5b137a09-82c8-46c8-b966-8c8a8fe21e7e",
 		"name": "ExamPiotrKuczkowski",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19888925"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -90,7 +89,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}:{{port}}/adv?id=629bba35bfd18520f8508e63",
+					"raw": "{{baseUrl}}:{{port}}/adv?id=629bba35bfd18520f8508e63z",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -101,7 +100,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "629bba35bfd18520f8508e63"
+							"value": "629bba35bfd18520f8508e63z"
 						}
 					]
 				}
@@ -228,6 +227,37 @@
 						"key": "authorization",
 						"value": "jan:alamakota",
 						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}:{{port}}/adv?id=6298ea9f50ca9725d4f1ceed",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"adv"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "6298ea9f50ca9725d4f1ceed"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "05 - delete id=0 unauthorized",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "jan:alamakota",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"url": {

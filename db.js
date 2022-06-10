@@ -28,8 +28,9 @@ const findAdvs = (conditions) => {
     return advsCollection.find(conditions).toArray();
 }
 
-const deleteAdv = (id) => {
-    return advsCollection.deleteOne({ _id: new ObjectId(id) });
+const deleteAdv = (id, author) => {
+    //return advsCollection.deleteOne({ _id: new ObjectId(id) });
+    return advsCollection.findOneAndDelete({ _id: new ObjectId(id), author: author });
 }
 
 const addAdv = (newAdv) => {
