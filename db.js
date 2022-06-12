@@ -38,10 +38,10 @@ const addAdv = (newAdv) => {
     return advsCollection.insertOne(newAdv);
 }
 
-const updateAdv = (id, isCompleted) => {
+const updateAdv = (id, collectionToUpdate) => {
     return advsCollection.updateOne(
         { _id: new ObjectId(id)},
-        { $set: { "iscompleted": isCompleted } }
+        { $set: collectionToUpdate }
     );
 }
 

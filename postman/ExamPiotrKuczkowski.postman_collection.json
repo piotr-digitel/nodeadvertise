@@ -1,10 +1,569 @@
 {
 	"info": {
-		"_postman_id": "5b137a09-82c8-46c8-b966-8c8a8fe21e7e",
+		"_postman_id": "4e702e10-f7c5-4c5d-9cd7-21a30adcd91b",
 		"name": "ExamPiotrKuczkowski",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19888925"
 	},
 	"item": [
+		{
+			"name": "not exist",
+			"item": [
+				{
+					"name": "12 - not exist endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/notexistendpoint",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"notexistendpoint"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12 - not exist endpoint authorized",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "jan:alamakota",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/notexistendpoint",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"notexistendpoint"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "get adverts",
+			"item": [
+				{
+					"name": "04 - all adverts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/advs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"advs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - advert id exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a626f46f951415d430a1df",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a626f46f951415d430a1df"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - advert id not exist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a5935c26395e0bbc83a4da",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a5935c26395e0bbc83a4da"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - advert bad id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a5935c26395e0bbc83",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a5935c26395e0bbc83"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "filter adverts",
+			"item": [
+				{
+					"name": "07 - adverts price >30, <50",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"price\": { \"$gt\": 30, \"$lt\": 50 }\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/findadvs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"findadvs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07 - adverts title has \"Two\"",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"title\": \"Two\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/findadvs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"findadvs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07 - adverts all aproved",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"aproved\": true\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/findadvs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"findadvs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07 - adverts all before 12",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"createdTime\": { \"$lt\": \"2022-06-12\" }\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/findadvs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"findadvs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07 - adverts aproved from 12 to 13",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"createdTime\": { \"$gt\": \"2022-06-12\", \"$lt\": \"2022-06-13\" },\r\n     \"aproved\": false\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/findadvs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"findadvs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "07 - adverts all from 13",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n     \"createdTime\": { \"$gt\": \"2022-06-13\" }\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/findadvs",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"findadvs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "edit advert",
+			"item": [
+				{
+					"name": "06 - patch id exist",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Pinio:jablko",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"_id\": \"62a626f46f951415d430a1df\",\r\n        \"id\": \"1\",\r\n        \"title\": \"Title One\",\r\n        \"description\": \"my first adv\",\r\n        \"author\": \"Pinio\",\r\n        \"category\": \"normal\",\r\n        \"price\": 10.5,\r\n        \"new\": true,\r\n        \"aproved\": false,\r\n        \"published\": false,\r\n        \"inactive\": false,\r\n        \"createdTime\": \"2022-06-12T17:48:36.534Z\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a626f46f951415d430a1df",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a626f46f951415d430a1df"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06 - patch id bad pass",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Pinio:jablk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"_id\": \"62a626f46f951415d430a1df\",\r\n        \"id\": \"1\",\r\n        \"title\": \"Title One\",\r\n        \"description\": \"my first adv\",\r\n        \"author\": \"Pinio\",\r\n        \"category\": \"normal\",\r\n        \"price\": 10.5,\r\n        \"new\": true,\r\n        \"aproved\": false,\r\n        \"published\": false,\r\n        \"inactive\": false,\r\n        \"createdTime\": \"2022-06-12T17:48:36.534Z\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a626f46f951415d430a1df",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a626f46f951415d430a1df"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06 - patch id no permision",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "jan:alamakota",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"_id\": \"62a626f46f951415d430a1df\",\r\n        \"id\": \"1\",\r\n        \"title\": \"Title One\",\r\n        \"description\": \"my first adv\",\r\n        \"author\": \"Pinio\",\r\n        \"category\": \"normal\",\r\n        \"price\": 10.5,\r\n        \"new\": true,\r\n        \"aproved\": false,\r\n        \"published\": false,\r\n        \"inactive\": false,\r\n        \"createdTime\": \"2022-06-12T17:48:36.534Z\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a626f46f951415d430a1df",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a626f46f951415d430a1df"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "06 - patch id not exist",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Pinio:jablko",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"_id\": \"62a626f46f951415d430a1da\",\r\n        \"id\": \"1\",\r\n        \"title\": \"Title One\",\r\n        \"description\": \"my first adv\",\r\n        \"author\": \"Pinio\",\r\n        \"category\": \"normal\",\r\n        \"price\": 10.5,\r\n        \"new\": true,\r\n        \"aproved\": false,\r\n        \"published\": false,\r\n        \"inactive\": false,\r\n        \"createdTime\": \"2022-06-12T17:48:36.534Z\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a626f46f951415d430a1da",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a626f46f951415d430a1da"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "delete advert",
+			"item": [
+				{
+					"name": "05 - delete id exist",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Pinio:jablko",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a626f46f951415d430a1da",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a626f46f951415d430a1da"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05 - delete id unauthorized",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "jan:alamakota",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}:{{port}}/adv?id=62a626f46f951415d430a1da",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"adv"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "62a626f46f951415d430a1da"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "02 - heartbeat",
 			"request": {
@@ -24,127 +583,13 @@
 			"response": []
 		},
 		{
-			"name": "12 - not exists endpoint",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/notexistendpoint",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"notexistendpoint"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "12 - not exists endpoint authorized",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "authorization",
-						"value": "jan:alamakota",
-						"type": "default"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/notexistendpoint",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"notexistendpoint"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "04 - all adverts",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/advs",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"advs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "04 - advert id=0",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/adv?id=629bba35bfd18520f8508e63z",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"adv"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "629bba35bfd18520f8508e63z"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "07 - adverts name=Two",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": " {\r\n     \"title\": \"Title\"\r\n }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/findadvs",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"findadvs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "03 - advert add",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n     \"id\": \"1\",\r\n     \"title\": \"Title Four\",\r\n     \"description\": \"my first adv\",\r\n     \"author\":\"Pinio\",\r\n     \"category\": \"normal\",\r\n     \"price\": 10.50,\r\n     \"new\": true,\r\n     \"aproved\": false,\r\n     \"published\": false,\r\n     \"inactive\": false\r\n }",
+					"raw": " {\r\n     \"id\": \"1\",\r\n     \"title\": \"Title One\",\r\n     \"description\": \"my first adv\",\r\n     \"author\":\"Pinio\",\r\n     \"category\": \"normal\",\r\n     \"price\": 10.50,\r\n     \"new\": true,\r\n     \"aproved\": false,\r\n     \"published\": false,\r\n     \"inactive\": false\r\n }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -159,121 +604,6 @@
 					"port": "{{port}}",
 					"path": [
 						"adv"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "03 - advert add Copy",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": " {\r\n     \"title\": \"Title Two\"\r\n }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/findadvs",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"findadvs"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "06 - patch id=0",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/adv?id=0",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"adv"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "0"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "05 - delete id=0",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "authorization",
-						"value": "jan:alamakota",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/adv?id=6298ea9f50ca9725d4f1ceed",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"adv"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "6298ea9f50ca9725d4f1ceed"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "05 - delete id=0 unauthorized",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "authorization",
-						"value": "jan:alamakota",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "{{baseUrl}}:{{port}}/adv?id=6299ba3c0761d9194c729a2d",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"adv"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "6299ba3c0761d9194c729a2d"
-						}
 					]
 				}
 			},
