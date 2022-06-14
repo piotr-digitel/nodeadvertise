@@ -1,0 +1,80 @@
+[
+{
+    "id" :"1",
+    "title" :"Title One",
+    "description" :"My first adv",
+    "author" :"Pinio",
+    "category" :"normal",
+    "price" :10.5,
+    "lang" :"EN",
+    "new" :true,
+    "aproved" :true,
+    "published" :false,
+    "inactive" :false
+},
+{
+    "id" :"2",
+    "title" :"Title Two",
+    "description" :"My second adv",
+    "author" :"Pinio",
+    "category" :"normal",
+    "price" :20.7,
+    "lang" :"EN",
+    "new" :true,
+    "aproved" :false,
+    "published" :false,
+    "inactive" :false
+},
+{
+    "id" :"3",
+    "title" :"Trzeci tytuł",
+    "description" :"Moje trzecie ogłoszenie",
+    "author" :"Pinio",
+    "category" :"normal",
+    "price" :30.5,
+    "lang" :"PL",
+    "new" :true,
+    "aproved" :true,
+    "published" :false,
+    "inactive" :false
+},
+{
+    "id" :"4",
+    "title" :"Czwarty tytuł",
+    "description" :"Moje czwarte ogłoszenie",
+    "author" :"Pinio",
+    "category" :"normal",
+    "price" :40.5,
+    "lang" :"PL",
+    "new" :true,
+    "aproved" :false,
+    "published" :false,
+    "inactive" :false
+},
+{
+    "id" :"5",
+    "title" :"Title Five",
+    "description" :"My 5'th adv",
+    "author" :"Pinio",
+    "category" :"normal",
+    "price" :50.5,
+    "lang" :"EN",
+    "new" :true,
+    "aproved" :false,
+    "published" :false,
+    "inactive" :false
+},
+{
+    "id" :"6",
+    "title" :"Title Six",
+    "description" :"My 6'th adv",
+    "author" :"Pinio",
+    "category" :"normal",
+    "price" :60.5,
+    "lang" :"EN",
+    "new" :true,
+    "aproved" :false,
+    "published" :false,
+    "inactive" :false
+}
+]
