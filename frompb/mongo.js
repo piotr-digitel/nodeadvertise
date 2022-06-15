@@ -16,7 +16,9 @@ const init = () =>
         })
         .catch(error => console.log(error));
 
-
+const getAdvs = () => {
+    return advsCollection.find().toArray();
+}
 
 const deleteAll = () => {
     return advsCollection.deleteMany();               //deleta all documents
@@ -29,4 +31,4 @@ const addAdvs = (newCollection) => {
         });
 }
 
-module.exports = { init, deleteAll, addAdvs };
+module.exports = { init, getAdvs, deleteAll, addAdvs };
