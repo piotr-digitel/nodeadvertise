@@ -3,7 +3,7 @@ const { ObjectId } = require('mongodb');
 
 const url = process.env.MONGODB_CONNECTION;
 
-const AdvCollectionName = 'advs';
+const AdvCollectionName = 'advs';  //tu lepiej dać pełną nazwę.
 
 let db;
 let advsCollection;

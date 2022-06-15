@@ -162,9 +162,9 @@ init().then(() => {
         if(newConditions.description) newConditions.description =  {$regex:  ".*" + newConditions.description + ".*"};
         if(newConditions.author) newConditions.author =  {$regex:  ".*" + newConditions.author + ".*"};
         if(newConditions.category) newConditions.category =  {$regex:  ".*" + newConditions.category + ".*"};
-        if(!newConditions.createdTime.$lt) newConditions.createdTime.$lt = '2099-01-01';
-        if(!newConditions.createdTime.$gt) newConditions.createdTime.$gt = '1970-01-01';
-        if(newConditions.createdTime) newConditions.createdTime = {$gt: new Date(newConditions.createdTime.$gt), $lt: new Date(newConditions.createdTime.$lt)};
+      //  if(!newConditions.createdTime.$lt) newConditions.createdTime.$lt = '2099-01-01';
+      //  if(!newConditions.createdTime.$gt) newConditions.createdTime.$gt = '1970-01-01';
+       // if(newConditions.createdTime) newConditions.createdTime = {$gt: new Date(newConditions.createdTime.$gt), $lt: new Date(newConditions.createdTime.$lt)};
         
         try {        
             const result = await findAdvs(newConditions);   //return object, if there no records found - keys.length=0

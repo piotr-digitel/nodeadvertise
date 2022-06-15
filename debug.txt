@@ -2,3 +2,6 @@ Timestamp: 12.06.2022, 12:07:12, method: GET, address: http://localhost:4700/hea
 Timestamp: 12.06.2022, 12:07:14, method: GET, address: http://localhost:4700/notexistendpoint
 Timestamp: 12.06.2022, 12:08:17, method: GET, address: http://localhost:4700/notexistendpoint
 Timestamp: 12.06.2022, 12:08:20, method: GET, address: http://localhost:4700/heartbeat
+Timestamp: 15.06.2022, 18:25:12, method: GET, address: http://localhost:4700/adv?id=62a62b6f6f951415d430a1e4
+Timestamp: 15.06.2022, 18:25:22, method: GET, address: http://localhost:4700/advs
+Timestamp: 15.06.2022, 18:25:34, method: GET, address: http://localhost:4700/adv?id=62a627066f951415d430a1e0
