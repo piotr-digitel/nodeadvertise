@@ -1,0 +1,63 @@
+Rules for completing the course:
+
+Final test date: June 26, 2022 (last meeting)
+
+Assessment method:
+
+    You prepare implementations of the functions you choose
+    You send me solutions via email, Slack (I suggest not to put them in a public repository :))
+    we discuss the prepared solution through Teams, Zoom, meet.jit.si:
+        calendar https://calendly.com/***********
+    if in doubt, you contact me via Slack, email
+
+Grading scale:
+
+    0-8 points → 2
+    9-11 points → 3
+    12-14 points → 3.5
+    15-18 points → 4
+    19-22 points → 4.5
+    23 and more points → 5
+
+Remarks
+
+    You can use any version of Node.js> = 14.
+    You can use any npm module (unless the task says otherwise)
+
+Business goal:
+
+The aim of the project is to create an application that allows you to manage online advertisements - a notice board.
+
+Each ad has:
+
+    title
+    description
+    author
+    categories
+    tags (multiple tags)
+    the price
+    ... (space for your ideas, the best ones will be additionally scored)
+
+Graphical interface is not required. Functionality will be checked with Postman. Remember about error handling, endpoint naming,
+handling HTTP methods and returned HTTP response codes.
+
+Feature List:
+
+0. [task necessary to pass] The application is documented with Postman - a collection containing examples of requests for all prepared functions
+1. [1 point] The port used by the application should be set using environment variables
+2. [1 point] The application responds to requests sent to the address / heartbeat with the current date and time
+3. [1 point] The application allows you to add an advertisement
+4. [2 points] The application allows you to return all ads and a single ad
+5. [1 point] The application allows you to delete the selected advertisement
+6. [1 point] The application allows you to modify the selected advertisement
+7. [1 point for each search criterion / maximum 5 points] The application allows you to search for ads according to various criteria (title, description, date range,
+   price range etc).
+8. [4-8 points] The application saves the ads in the database [8 points] or files [4 points]
+9. [2 points] Removing and modifying ads is secured with a password (e.g. middleware that verifies the password), in the absence of access, an appropriate message is returned
+   and the HTTP response code. No production level security is required, rather a basic solution.
+10. [4 points] The application has 3 permanently defined users, each of them can delete and modify only those ads that he added himself,
+    if no access is available, an appropriate message and HTTP response code are returned
+11. [3 points] After starting the application with a parameter (e.g. node app.js debug), it saves the time of receipt of each request in the file,
+    HTTP method and the address to which the request was made
+12. [2 points] The application, after receiving a request to an address that does not exist, should return a static image instead of the default 404 error page
+13. [2 points] In the event of application errors, the error details are saved in console.log and the user receives an appropriate message and HTTP response code
