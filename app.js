@@ -157,16 +157,16 @@ init().then(() => {
 //find adv's - parameters from body - in text fields finds words
     app.get('/findadvs', async (req, res, next) => {
         let newConditions = req.body;
-
-        if(newConditions.title) newConditions.title =  {$regex:  ".*" + newConditions.title + ".*"};
-        if(newConditions.description) newConditions.description =  {$regex:  ".*" + newConditions.description + ".*"};
-        if(newConditions.author) newConditions.author =  {$regex:  ".*" + newConditions.author + ".*"};
-        if(newConditions.category) newConditions.category =  {$regex:  ".*" + newConditions.category + ".*"};
-      //  if(!newConditions.createdTime.$lt) newConditions.createdTime.$lt = '2099-01-01';
-      //  if(!newConditions.createdTime.$gt) newConditions.createdTime.$gt = '1970-01-01';
-       // if(newConditions.createdTime) newConditions.createdTime = {$gt: new Date(newConditions.createdTime.$gt), $lt: new Date(newConditions.createdTime.$lt)};
-        
-        try {        
+        try { 
+            if(newConditions.title) newConditions.title =  {$regex:  ".*" + newConditions.title + ".*"};
+            if(newConditions.description) newConditions.description =  {$regex:  ".*" + newConditions.description + ".*"};
+            if(newConditions.author) newConditions.author =  {$regex:  ".*" + newConditions.author + ".*"};
+            if(newConditions.category) newConditions.category =  {$regex:  ".*" + newConditions.category + ".*"};
+            if(newConditions.createdTime) {                          //if there ist section createf time:
+                if(!newConditions.createdTime.$lt) newConditions.createdTime.$lt = '2099-01-01';     //if no end
+                if(!newConditions.createdTime.$gt) newConditions.createdTime.$gt = '1970-01-01';     //if no begining
+                newConditions.createdTime = {$gt: new Date(newConditions.createdTime.$gt), $lt: new Date(newConditions.createdTime.$lt)};  //create date objects
+            };    
             const result = await findAdvs(newConditions);   //return object, if there no records found - keys.length=0
             if(Object.keys(result).length){   
                 res.send(result);
